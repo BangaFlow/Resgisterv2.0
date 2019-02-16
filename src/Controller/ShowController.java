@@ -187,8 +187,8 @@ public class ShowController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        /*initColumns();
-        table_produit.setItems(data);*/
+        initColumns();
+        table_produit.setItems(data);
     }
 
     @FXML
