@@ -16,9 +16,13 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -42,6 +46,8 @@ public class ProduitController {
 
     @FXML
     private AnchorPane mainPane;
+    @FXML
+    private JFXTextField fileName;
 
     @FXML
     void saveProduct(ActionEvent event) {
@@ -91,6 +97,28 @@ public class ProduitController {
             e.printStackTrace();
         }
         mainPane.getChildren().setAll(pane);
+
+    }
+
+    @FXML
+    private void openFile(ActionEvent actionEvent) {
+        Stage primary = new Stage();
+        primary.isAlwaysOnTop();
+        FileChooser filechooser = new FileChooser();
+        filechooser.setTitle("Selectionner Une Image");
+        filechooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"));
+        File file = filechooser.showOpenDialog(primary);
+        String path ="C:\\xampp\\htdocs\\ImageStore";
+        fileName.setText(file.getName());
+        if(file!=null)
+        {
+            System.out.println("Chosen file : "+file.getName());
+            try {
+                Files.copy(file.toPath(),new File(path+"\\"+file.getName()).toPath());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
     }
 }
